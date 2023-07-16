@@ -69,4 +69,6 @@ figcaption {
   bottom: 0;
   right: 0;
   padding-bottom: 20px !important;
+  padding-right: 20px !important;
+  font-size: 12px;
 }
