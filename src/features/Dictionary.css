@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #9dc0bc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.wrapper {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  color: #320e3b;
+  width: 95%;
+  max-width: 800px;
+  margin: auto;
+  /* height: 100vh; */
+}
+
+.content {
+  margin: auto;
+}
+
+input {
+  width: 80%;
+  height: 30px;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #320e3b;
+  background-color: #9dc0bc;
+  padding: 5px 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  /* width: 80%; */
+  padding: 5px 10px;
+  height: 42px;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #320e3b;
+  background-color: #320e3b;
+  color: #9dc0bc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+h1 {
+  text-transform: capitalize;
+}
+
+@media screen and (max-width: 768px) {
+  input {
+    width: 70%;
+  }
+  button {
+    width: 20%;
+  }
+}
