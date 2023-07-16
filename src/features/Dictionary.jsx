@@ -139,6 +139,9 @@ const Dictionary = () => {
         <div className="content">{loading ? <Spinner /> : content}</div>
         {/* {content} */}
       </div>
+      <footer>
+        <figcaption>"Information on this website was gotten from a free database so not all words are available"</figcaption>
+      </footer>
     </div>
   );
 };

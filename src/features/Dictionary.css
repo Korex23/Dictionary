@@ -63,3 +63,10 @@ h1 {
     width: 20%;
   }
 }
+
+figcaption {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding-bottom: 20px !important;
+}
