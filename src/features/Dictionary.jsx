@@ -3,6 +3,10 @@ import axios from "axios";
 // import { set } from "date-fns";
 import Spinner from "./spinner";
 import "./Dictionary.css";
+import AudioPlayer from "./AudioPlayer";
+import SignOut from "./SignOut";
+import { db, auth } from "../config/firebaseconfig";
+import { doc, getDocs, addDoc, collection } from "firebase/firestore";
 
 const Dictionary = () => {
   const [word, setWord] = useState("");
@@ -11,6 +15,22 @@ const Dictionary = () => {
   const [phonetic, setPhonetic] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [username, setUsername] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [wordHistory, setWordHistory] = useState([]);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  const userRef = collection(db, "UserData");
+  console.log(auth?.currentUser?.displayName);
+
+  const user = auth.currentUser;
 
   const DICTIONARY_URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
   const RANDOM_WORD_URL = "https://random-word-api.herokuapp.com/word?number=1";
@@ -58,15 +78,73 @@ const Dictionary = () => {
     }
   };
 
+  const wordRef = collection(db, "wordHistory");
+
+  const getWord = async () => {
+    try {
+      const data = await getDocs(wordRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      // setWordHistory(...filteredData, word);
+      console.log(filteredData);
+      setWordHistory(filteredData);
+    } catch (e) {
+      console.log("Error getting document: ", e);
+    }
+  };
+
+  const addWord = async () => {
+    try {
+      const docRef = await addDoc(wordRef, {
+        word: word,
+        userId: auth?.currentUser?.uid,
+        displayName: auth?.currentUser?.displayName,
+      });
+      console.log(auth?.currentUser?.uid);
+      console.log("Document written with ID: ", docRef.id);
+      getWord();
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   useEffect(() => {
     fetchRandomWord();
+    setUsername(user.displayName);
+    getWord();
   }, []);
 
   const handleWordSubmit = (e) => {
     e.preventDefault();
     fetchWord();
+    addWord();
   };
 
+  const Modal = () => {
+    return (
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+
+        {isOpen && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Modal Title</h2>
+              <ul>
+                {wordHistory.map((words) => (
+                  <li key={words.id}>
+                    {words.word} -{words.displayName}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={closeModal}>Close Modal</button>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
   const WordDetails = () => {
     return (
       <>
@@ -78,6 +156,7 @@ const Dictionary = () => {
               {/* <audio controls>
                 <source src={phonetic.audio} type="audio/mpeg" />
               </audio> */}
+              <AudioPlayer src={phonetic.audio} />
             </>
           ) : null}
         </div>
@@ -133,6 +212,7 @@ const Dictionary = () => {
 
   return (
     <div className="wrapper">
+      <h2>{username}</h2>
       <div>
         <input type="text" value={word} onChange={handleWordChange} />
         <button onClick={handleWordSubmit}>Search</button>
@@ -140,8 +220,13 @@ const Dictionary = () => {
         {/* {content} */}
       </div>
       <footer>
-        <figcaption>"Information on this website was gotten from a free database so not all words are available"</figcaption>
+        <figcaption>
+          "Information on this website was gotten from a free database so not
+          all words are available"
+        </figcaption>
       </footer>
+      <SignOut />
+      <Modal />
     </div>
   );
 };
