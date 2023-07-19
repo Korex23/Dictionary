@@ -121,6 +121,12 @@ const Dictionary = () => {
     fetchWord();
     addWord();
   };
+const currentUserDisplayName = auth.currentUser ? auth.currentUser.displayName : null;
+
+  // Filter wordHistory to only include items with matching displayName
+  const filteredWordHistory = wordHistory.filter((words) => words.displayName === currentUserDisplayName);
+
+
 
   const Modal = () => {
     return (
@@ -132,12 +138,12 @@ const Dictionary = () => {
             <div className="modal-content">
               <h2>Modal Title</h2>
               <ul>
-                {wordHistory.map((words) => (
-                  <li key={words.id}>
-                    {words.word} -{words.displayName}
-                  </li>
-                ))}
-              </ul>
+        {filteredWordHistory.map((words) => (
+          <li key={words.id}>
+            {words.word} - {words.displayName}
+          </li>
+        ))}
+      </ul>
               <button onClick={closeModal}>Close Modal</button>
             </div>
           </div>
