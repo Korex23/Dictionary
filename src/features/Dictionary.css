@@ -17,6 +17,8 @@ body {
   width: 95%;
   max-width: 800px;
   margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
   /* height: 100vh; */
 }
 
@@ -24,7 +26,7 @@ body {
   margin: auto;
 }
 
-input {
+.wrapper input {
   width: 80%;
   height: 30px;
   border-radius: 5px 0 0 5px;
@@ -38,7 +40,7 @@ input:focus {
   outline: none;
 }
 
-button {
+.wrapper button {
   /* width: 80%; */
   padding: 5px 10px;
   height: 42px;
@@ -57,15 +59,34 @@ h1 {
 
 @media screen and (max-width: 768px) {
   input {
-    width: 70%;
+    width: 70% !important;
   }
   button {
     width: 20%;
   }
+
+  /* .auth-form .flex-it button {
+    width: 30% !important;
+  } */
+  .auth-form {
+    width: 80% !important;
+    transform: translateX(-10px);
+  }
+
+  .btn-style {
+    width: 30%;
+  }
+
+  .auth-form .btn-style {
+    width: 107.5% !important;
+  }
+  .auth-form input {
+    width: 100% !important;
+  }
 }
 
 figcaption {
-  position: fixed;
+  /* position: fixed; */
   bottom: 0;
   right: 0;
   padding-bottom: 20px !important;
@@ -83,12 +104,100 @@ figcaption {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
+  height: 400px;
+  width: 60%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+}
+
+.btn-style {
+  padding: 5px 10px;
+  height: 42px;
+  border-radius: 5px !important;
+  border: 1px solid #320e3b;
+  background-color: #320e3b;
+  color: #9dc0bc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 400px;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  /* align-items: center; */
+}
+
+.auth-form input {
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #320e3b;
+  background-color: #9dc0bc;
+  padding: 5px 10px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin-bottom: 10px;
+}
+
+.auth-form .btn-style {
+  width: auto;
+}
+
+.btn-style {
+  padding: 5px 10px;
+  height: 42px;
+  width: 90px;
+  border-radius: 5px;
+  border: 1px solid #320e3b;
+  background-color: #320e3b;
+  color: #9dc0bc;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #320e3b;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+.flex-it {
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.flex-it input {
+  border-radius: 5px 0 0 5px;
+  border-right: none;
+  width: 350px !important;
+}
+.flex-it button {
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #320e3b;
+  height: 42px;
+  border-left: none;
+  width: 55px;
+  background-color: #9dc0bc;
+  /* padding: 10px; */
+  /* padding: 5px 10px; */
+}
+
+button:focus {
+  outline: none;
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../config/firebaseconfig";
 import { useState } from "react";
+import { BackButton } from "./SignOut";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");
@@ -21,14 +22,15 @@ const ResetPassword = () => {
   };
 
   return (
-    <div>
+    <div className="auth-form">
+      <BackButton />
       <p>{error}</p>
       <input
         type="email"
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button type="button" onClick={triggerResetEmail}>
+      <button type="button" className="btn-style" onClick={triggerResetEmail}>
         Reset password
       </button>
     </div>

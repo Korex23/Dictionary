@@ -1,6 +1,6 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../config/firebaseconfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignOut = () => {
   const navigate = useNavigate();
@@ -16,10 +16,19 @@ const SignOut = () => {
 
   return (
     <>
-      <button type="button" onClick={handleSignOut}>
+      <button type="button" className="btn-style" onClick={handleSignOut}>
         Sign Out
       </button>
     </>
+  );
+};
+export const BackButton = () => {
+  return (
+    <Link to={-1}>
+      <button className="btn-style" style={{ marginBottom: "10px" }}>
+        Go back
+      </button>
+    </Link>
   );
 };
 

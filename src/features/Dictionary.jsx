@@ -4,7 +4,7 @@ import axios from "axios";
 import Spinner from "./spinner";
 import "./Dictionary.css";
 import AudioPlayer from "./AudioPlayer";
-import SignOut from "./SignOut";
+import SignOut, { BackButton } from "./SignOut";
 import { db, auth } from "../config/firebaseconfig";
 import { doc, getDocs, addDoc, collection } from "firebase/firestore";
 
@@ -15,7 +15,6 @@ const Dictionary = () => {
   const [phonetic, setPhonetic] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [username, setUsername] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [wordHistory, setWordHistory] = useState([]);
 
@@ -27,10 +26,8 @@ const Dictionary = () => {
     setIsOpen(false);
   };
 
-  const userRef = collection(db, "UserData");
-  console.log(auth?.currentUser?.displayName);
-
-  const user = auth.currentUser;
+  // const userRef = collection(db, "UserData");
+  // console.log(auth?.currentUser?.displayName);
 
   const DICTIONARY_URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
   const RANDOM_WORD_URL = "https://random-word-api.herokuapp.com/word?number=1";
@@ -87,8 +84,6 @@ const Dictionary = () => {
         ...doc.data(),
         id: doc.id,
       }));
-      // setWordHistory(...filteredData, word);
-      console.log(filteredData);
       setWordHistory(filteredData);
     } catch (e) {
       console.log("Error getting document: ", e);
@@ -112,14 +107,18 @@ const Dictionary = () => {
 
   useEffect(() => {
     fetchRandomWord();
-    setUsername(user.displayName);
     getWord();
   }, []);
 
   const handleWordSubmit = (e) => {
     e.preventDefault();
     fetchWord();
-    addWord();
+    // setWord("");
+    if (word !== "") {
+      addWord();
+    } else {
+      return null;
+    }
   };
   const currentUserDisplayName = auth.currentUser
     ? auth.currentUser.displayName
@@ -132,19 +131,25 @@ const Dictionary = () => {
 
   const Modal = () => {
     return (
-      <div>
-        <button onClick={openModal}>Open Modal</button>
+      <div style={{ marginTop: "10px" }}>
+        <button className="btn-style" onClick={openModal}>
+          History
+        </button>
 
         {isOpen && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <h2>Modal Title</h2>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <h4>Search History</h4>
+                <button className="btn-style" onClick={closeModal}>
+                  Close
+                </button>
+              </div>
               <ul>
                 {filteredWordHistory.map((words) => (
                   <li key={words.id}>{words.word}</li>
                 ))}
               </ul>
-              <button onClick={closeModal}>Close Modal</button>
             </div>
           </div>
         )}
@@ -185,7 +190,7 @@ const Dictionary = () => {
                     return <li>{antonym}</li>;
                   })}
                 </ul>
-                <p>{definition.example}</p>
+                <p style={{ fontSize: "10px" }}>{definition.example}</p>
               </div>
             ))}
             <ul>
@@ -218,7 +223,7 @@ const Dictionary = () => {
 
   return (
     <div className="wrapper">
-      <h2>{username}</h2>
+      <BackButton />
       <div>
         <input type="text" value={word} onChange={handleWordChange} />
         <button onClick={handleWordSubmit}>Search</button>
