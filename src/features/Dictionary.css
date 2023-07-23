@@ -1,25 +1,41 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
+body #light {
+  background-color: #9dc0bc;
+  height: 100vh;
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+body #dark {
+  background-color: #320e3be1;
+  overflow-x: hidden;
+  background-size: cover;
+  height: 100vh;
+}
+
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #9dc0bc;
+  /* background-color: #9dc0bc;uy */
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
 .wrapper {
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
-  color: #320e3b;
-  width: 95%;
+  width: 92%;
   max-width: 800px;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
-  /* height: 100vh; */
+}
+
+#light .wrapper {
+  color: #320e3b;
+}
+
+#dark .wrapper {
+  color: white;
 }
 
 .content {
@@ -30,10 +46,19 @@ body {
   width: 80%;
   height: 30px;
   border-radius: 5px 0 0 5px;
-  border: 1px solid #320e3b;
-  background-color: #9dc0bc;
   padding: 5px 10px;
   font-family: "Plus Jakarta Sans", sans-serif;
+  border: 1px solid #320e3b;
+}
+
+#light .wrapper input {
+  background-color: #9dc0bc;
+  color: #320e3b;
+}
+
+#dark .wrapper input {
+  background-color: #320e3bcd;
+  color: #fff;
 }
 
 input:focus {
@@ -51,6 +76,10 @@ input:focus {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 600;
   cursor: pointer;
+}
+
+#dark button {
+  color: white;
 }
 
 h1 {
@@ -143,11 +172,19 @@ figcaption {
 .auth-form input {
   height: 30px;
   border-radius: 5px;
-  border: 1px solid #320e3b;
-  background-color: #9dc0bc;
   padding: 5px 10px;
   font-family: "Plus Jakarta Sans", sans-serif;
   margin-bottom: 10px;
+  border: 1px solid #320e3b;
+}
+
+#light .auth-form input {
+  background-color: #9dc0bc;
+  color: #320e3b;
+}
+#dark .auth-form input {
+  background-color: #320e3bcd;
+  color: #9dc0bc;
 }
 
 .auth-form .btn-style {
@@ -169,11 +206,21 @@ figcaption {
 
 a {
   text-decoration: none;
-  color: #320e3b;
 }
 
 a:visited {
   text-decoration: none;
+}
+#light a {
+  color: #320e3b;
+}
+
+#dark a {
+  color: #9dc0bc;
+}
+
+#dark p {
+  color: white;
 }
 
 .flex-it {
@@ -193,11 +240,73 @@ a:visited {
   height: 42px;
   border-left: none;
   width: 55px;
-  background-color: #9dc0bc;
   /* padding: 10px; */
   /* padding: 5px 10px; */
 }
 
+#light .flex-it button {
+  background-color: #9dc0bc;
+}
+#dark .flex-it button {
+  background-color: #320e3bcd;
+}
+
+#dark .flex-it button svg {
+  fill: white;
+}
+
 button:focus {
   outline: none;
+}
+
+.switch {
+  display: flex;
+  width: 100vw;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.switch label {
+  margin: 10px;
+}
+
+#light .switch label {
+  color: black;
+}
+
+#dark .switch label {
+  color: white;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+
+#light .loading-spinner {
+  border: 10px solid #4c2a85;
+  border-top: 10px solid #9dc0bc;
+}
+
+#dark .loading-spinner {
+  border: 10px solid #9dc0bc;
+  border-top: 10px solid #320e3be1;
 }

@@ -237,7 +237,7 @@ const Dictionary = () => {
         </figcaption>
       </footer>
       <SignOut />
-      <Modal />
+      {/* <Modal /> */}
     </div>
   );
 };

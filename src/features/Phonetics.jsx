@@ -56,7 +56,7 @@ const Phonetics = () => {
   const [error, setError] = useState(null);
   const [phonetics, setPhonetics] = useState([]);
   const [phoneticAudio, setPhoneticAudio] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const DICTIONARY_URL = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
 
@@ -77,7 +77,11 @@ const Phonetics = () => {
       setLoading(false);
     } catch (error) {
       console.log(error);
-      setError("No such word");
+      if (word === "") {
+        setError("Please enter a word");
+      } else {
+        setError("No such word");
+      }
     }
   };
 
@@ -116,7 +120,10 @@ const Phonetics = () => {
     fetchWord();
     if (word !== "") {
       addWord();
+    } else if (word === "") {
+      setError("Please enter a word");
     } else {
+      setError("No such word");
       return null;
     }
     // setWord("");

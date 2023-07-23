@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import SignOut, { BackButton } from "./SignOut";
 // import { db, auth } from "../config/firebaseconfig";
 import { doc, getDocs, addDoc, collection } from "firebase/firestore";
+import Pagination from "./pagination/Pagination";
 
 export const History = () => {
   const [wordHistory, setWordHistory] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [limit, setLimit] = useState(15);
   const wordRef = collection(db, "wordHistory");
 
   const getWord = async () => {
@@ -17,6 +21,7 @@ export const History = () => {
         id: doc.id,
       }));
       setWordHistory(filteredData);
+      setTotal(filteredData.length);
     } catch (e) {
       console.log("Error getting document: ", e);
     }
@@ -32,16 +37,24 @@ export const History = () => {
     (words) => words.userId === currentUserDisplayName
   );
 
+  const end = currentPage * limit;
+  const start = end - limit;
   return (
     <>
       <div className="wrapper">
         <BackButton />
         <h2>Search History</h2>
         <ul>
-          {filteredWordHistory.map((words) => (
+          {filteredWordHistory.slice(start, end).map((words) => (
             <li key={words.id}>{words.word}</li>
           ))}
         </ul>
+        <Pagination
+          currentPage={currentPage}
+          total={total}
+          limit={limit}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
     </>
   );

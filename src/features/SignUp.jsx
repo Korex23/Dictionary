@@ -57,7 +57,7 @@ const SignIn = () => {
         </p>
         <p>
           Forgotten your password?
-          <Link to="/forgotpassword">Forgotten Password</Link>
+          <Link to="/forgotpassword"> Forgotten Password</Link>
         </p>
       </form>
     </>
