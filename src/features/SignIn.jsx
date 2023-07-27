@@ -41,6 +41,7 @@ const SignIn = () => {
       const user = userCredential.user;
       await updateProfile(user, { displayName: username });
       navigate("/dashboard");
+      // localStorage.setItem("user", auth.currentUser.uid);
       // addUsername();
     } catch (error) {
       console.log(error);

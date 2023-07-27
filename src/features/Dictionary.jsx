@@ -42,26 +42,26 @@ const Dictionary = () => {
     }
   };
 
-  const fetchRandomWord = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(RANDOM_WORD_URL);
-      const randomWord = response.data[0];
-      setWord(randomWord);
-      fetchWord(randomWord);
-    } catch (error) {
-      console.log(error);
-      setError("Failed to fetch random word");
-    }
-  };
+  // const fetchRandomWord = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await axios.get(RANDOM_WORD_URL);
+  //     const randomWord = response.data[0];
+  //     setWord(randomWord);
+  //     fetchWord(randomWord);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError("Failed to fetch random word");
+  //   }
+  // };
 
   const fetchWord = async (selectedWord) => {
     try {
       setLoading(true);
-      const url = selectedWord
-        ? `https://api.dictionaryapi.dev/api/v2/entries/en/${selectedWord}`
-        : DICTIONARY_URL;
-      const response = await axios.get(url);
+      // const url = selectedWord
+      //   ? `https://api.dictionaryapi.dev/api/v2/entries/en/${selectedWord}`
+      //   : DICTIONARY_URL;
+      const response = await axios.get(DICTIONARY_URL);
       const data = response.data[0];
       setMeanings(data.meanings);
       setPhonetics(data.phonetics);
@@ -71,7 +71,11 @@ const Dictionary = () => {
     } catch (error) {
       console.log(error);
       setLoading(false);
-      setError("No word found");
+      if (word === "") {
+        setError("Please enter a word");
+      } else {
+        setError("No such word");
+      }
     }
   };
 
@@ -106,7 +110,8 @@ const Dictionary = () => {
   };
 
   useEffect(() => {
-    fetchRandomWord();
+    // fetchRandomWord();
+    fetchWord();
     getWord();
   }, []);
 
@@ -116,7 +121,10 @@ const Dictionary = () => {
     // setWord("");
     if (word !== "") {
       addWord();
+    } else if (word === "") {
+      setError("Please enter a word");
     } else {
+      setError("No such word");
       return null;
     }
   };
@@ -190,7 +198,18 @@ const Dictionary = () => {
                     return <li>{antonym}</li>;
                   })}
                 </ul>
-                <p style={{ fontSize: "10px" }}>{definition.example}</p>
+                {definition.example ? (
+                  <p
+                    style={{
+                      fontSize: "14px",
+                      transform: "translateX(25px)",
+                      fontStyle: "italic",
+                    }}
+                  >
+                    <span>Example: </span>
+                    {definition.example}
+                  </p>
+                ) : null}
               </div>
             ))}
             <ul>
@@ -232,12 +251,11 @@ const Dictionary = () => {
       </div>
       <footer>
         <figcaption>
-          "Information on this website was gotten from a free database so not
-          all words are available"
+          Disclaimer: "Information on this website was gotten from a free
+          database so not all words are available"
         </figcaption>
       </footer>
       <SignOut />
-      {/* <Modal /> */}
     </div>
   );
 };

@@ -21,21 +21,21 @@ export const History = () => {
         id: doc.id,
       }));
       setWordHistory(filteredData);
-      setTotal(filteredData.length);
+      // setTotal(filteredData.length);
     } catch (e) {
       console.log("Error getting document: ", e);
     }
   };
-
-  useEffect(() => {
-    getWord();
-  }, []);
-
   const currentUserDisplayName = auth.currentUser ? auth.currentUser.uid : null;
 
   const filteredWordHistory = wordHistory.filter(
     (words) => words.userId === currentUserDisplayName
   );
+
+  useEffect(() => {
+    getWord();
+    setTotal(filteredWordHistory.length);
+  }, []);
 
   const end = currentPage * limit;
   const start = end - limit;

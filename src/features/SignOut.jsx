@@ -9,6 +9,7 @@ const SignOut = () => {
     try {
       await signOut(auth);
       navigate("/");
+      localStorage.removeItem("user");
     } catch (error) {
       console.log(error);
     }
